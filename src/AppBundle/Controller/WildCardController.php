@@ -30,7 +30,6 @@ class WildCardController extends Controller
 
     public function getNumber($key = 1)
     {
-
         return $this->render('wildcard/keyNumber.html.twig', array(
             'number' => $key,
         ));
@@ -106,5 +105,29 @@ class WildCardController extends Controller
         );
 
         return new Response('<html><body> Absolute URL :'.$url.'</body></html>');
+    }
+
+
+    // Not Found Exception
+
+    /**
+     * @Route("/check/{key}", name="check_key", requirements={"key"="\d+"})
+     */
+
+    public function checkNotFound($key)
+    {
+        if ($key == 10) {
+            return $this->render('wildcard/keyNumber.html.twig', array(
+                'number' => $key,
+            ));
+        } else {
+            // 404 Not Found Error
+            throw $this->createNotFoundException('The Number '.$key.' does not exist');
+
+
+            // 500 Internal Server Error
+
+//            throw new \Exception('Something went wrong!');
+        }
     }
 }
