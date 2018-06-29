@@ -1,0 +1,18 @@
+
+{% extends 'masterlayout/master.html.twig' %}
+
+    {% block title %}
+        My Cool Blog
+    {% endblock %}
+
+    {% block body %}
+
+        {% set fruits = ['apple', 'orange', 'citrus'] %}
+
+        {% for i in 0..10 %}
+
+            {{ cycle(fruits, i) }}
+
+        {% endfor %}
+
+    {% endblock %}

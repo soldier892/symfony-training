@@ -111,9 +111,10 @@ class WildCardController extends Controller
     // Not Found Exception
 
     /**
+     * @param $key
+     * @return Response
      * @Route("/check/{key}", name="check_key", requirements={"key"="\d+"})
      */
-
     public function checkNotFound($key)
     {
         if ($key == 10) {

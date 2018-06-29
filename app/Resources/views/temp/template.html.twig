@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title>Welcome to Symfony!</title>
+</head>
+<body>
+
+    <ul id="navigation">
+        {% for item in values %}
+            <li>{{ item }}</li>
+            <br>
+        {% endfor %}
+    </ul>
+
+    {% set fruits = ['apple', 'orange', 'citrus'] %}
+
+    {% for i in 0..10 %}
+        {{ cycle(fruits, i) }}
+    {% endfor %}
+
+</body>
+</html>
