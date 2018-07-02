@@ -2,26 +2,28 @@
 
 <html>
 
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Test Application{% endblock %}</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Test Application{% endblock %}</title>
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
 
-    <body>
+</head>
 
-        <div id="sidebar">
-            {% block sidebar %}
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/">Blog</a></li>
-                </ul>
-            {% endblock %}
-        </div>
+<body>
 
-        <div id="content">
-            {% block body %}{% endblock %}
-        </div>
+<div id="sidebar">
+    {% block sidebar %}
+        <ul>
+            <li><a href= "{{ path('homepage')}}">Home</a></li>
+            <li><a href= "{{ path('temp_index', { 'key' : 10 }) }}">Blog</a></li>
+        </ul>
+    {% endblock %}
+</div>
 
-    </body>
+<div id="content">
+    {% block body %}{% endblock %}
+</div>
+
+</body>
 
 </html>
