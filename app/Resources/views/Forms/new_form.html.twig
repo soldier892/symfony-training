@@ -1,3 +1,19 @@
-{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-{{ form_widget(form) }}
-{{ form_end(form) }}
+
+
+{% extends 'masterlayout/master.html.twig' %}
+
+    {% block title %}
+        Test Application
+    {% endblock %}
+
+    {% block sidebar %}
+
+    {% endblock %}
+
+    {% block body %}
+
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+
+    {% endblock %}

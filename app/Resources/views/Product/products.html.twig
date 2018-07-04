@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Crud</title>
+</head>
+<body>
+
+{% for item in products %}
+
+    <ul>
+        <li> {{ item.name }} </li>
+        <li> {{ item.price }} </li>
+        <li> {{ item.description }} </li>
+        <li> <a href="{{ path('update_product', { 'key' :  item.id  }) }}">Edit</a> </li>
+        <li> <a href="{{ path('delete_product', { 'key' :  item.id  }) }}">Delete</a> </li>
+    </ul>
+
+{% endfor %}
+
+
+<a href="{{ path('create_product') }}">Add New Product</a>
+
+
+</body>
+</html>
