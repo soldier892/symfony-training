@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Product
@@ -24,21 +25,46 @@ class Product
     /**
      * @var $name
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=5)
+     * @Assert\Type("string")
      */
     private $name;
 
     /**
      * @var $price
      * @ORM\Column(type="decimal", scale=2)
+     * @Assert\NotBlank()
+     * @Assert\Type("double", message = "The value is not a valid Price.")
      */
     private $price;
 
     /**
      * @var $description
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $description;
 
+    /**
+     * @var int
+     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+
+    private $category;
+
+
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
 
     public function getName()
     {

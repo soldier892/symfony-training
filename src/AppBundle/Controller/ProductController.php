@@ -2,13 +2,18 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
+use Doctrine\ORM\Mapping\Entity;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
 
 class ProductController extends Controller
 {
@@ -21,10 +26,17 @@ class ProductController extends Controller
     {
         $product = new Product();
 
+
+
+
         $form = $this->createFormBuilder($product)
             ->add('name', TextType::class)
-            ->add('price', \Symfony\Component\Form\Extension\Core\Type\IntegerType::class)
+            ->add('price', TextType::class)
             ->add('description', TextType::class)
+            ->add('category', EntityType::class, array(
+                'class' => 'AppBundle:Category',
+                'choice_label' => 'Select Category'
+            ))
             ->add('save', SubmitType::class, array('label' =>'Save Product'))
             ->getForm();
 
@@ -45,6 +57,9 @@ class ProductController extends Controller
         return $this->render('/Forms/new_form.html.twig', array(
             'form' => $form->createView()
         ));
+
+
+
 
 //        $entityManager = $this->getDoctrine()->getManager();
 //
@@ -73,18 +88,18 @@ class ProductController extends Controller
 
         // Query For Objects
 
-//        $product = $this->getDoctrine()
-//            ->getRepository(Product::class)->findAll();
+        $product = $this->getDoctrine()
+            ->getRepository(Product::class)->findAll();
 
 
         //Objects with Doctrine Query Builder
 
-        $repository = $this->getDoctrine()
-            ->getRepository(Product::class);
-
-        $query = $repository->createQueryBuilder('p')->where('p.price < :price')
-            ->setParameter('price', 20000)->orderBy('p.price', 'DESC')
-            ->getQuery();
+//        $repository = $this->getDoctrine()
+//            ->getRepository(Product::class);
+//
+//        $query = $repository->createQueryBuilder('p')->where('p.price < :price')
+//            ->setParameter('price', 20000)->orderBy('p.price', 'DESC')
+//            ->getQuery();
 
 
         // DQL Query
@@ -94,7 +109,7 @@ class ProductController extends Controller
 //                 ORDER BY p.id DESC')
 //            ->setParameter('price', 19.99);
 
-        $product = $query->getResult();
+//        $product = $query->getResult();
 
         if (!$product) {
             throw $this->createNotFoundException(
@@ -129,6 +144,10 @@ class ProductController extends Controller
             ->add('name', TextType::class)
             ->add('price', \Symfony\Component\Form\Extension\Core\Type\IntegerType::class)
             ->add('description', TextType::class)
+            ->add('category', EntityType::class, array(
+                'class' => 'AppBundle:Category',
+                'choice_label' => 'Select Category'
+            ))
             ->add('save', SubmitType::class, array('label' =>'Update Product'))
             ->getForm();
 
