@@ -35,7 +35,6 @@ class Product
      * @var $price
      * @ORM\Column(type="decimal", scale=2)
      * @Assert\NotBlank()
-     * @Assert\Type("double", message = "The value is not a valid Price.")
      */
     private $price;
 

@@ -4,11 +4,14 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Product;
+use AppBundle\Service\MessageGenerator;
 use Doctrine\ORM\Mapping\Entity;
+use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +34,7 @@ class ProductController extends Controller
 
         $form = $this->createFormBuilder($product)
             ->add('name', TextType::class)
-            ->add('price', TextType::class)
+            ->add('price', IntegerType::class)
             ->add('description', TextType::class)
             ->add('category', EntityType::class, array(
                 'class' => 'AppBundle:Category',
@@ -44,14 +47,17 @@ class ProductController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $product = $form->getData();
+            $productService = $this->get("app.service.products");
 
-            $entityManager = $this->getDoctrine()->getManager();
+            if ($productService->createProduct($product)) {
+                return $this->redirectToRoute('show_product');
+            }
 
-            $entityManager->persist($product);
-
-            $entityManager->flush();
-
-            return $this->redirectToRoute('show_product');
+//            $entityManager = $this->getDoctrine()->getManager();
+//
+//            $entityManager->persist($product);
+//
+//            $entityManager->flush();
         }
 
         return $this->render('/Forms/new_form.html.twig', array(
@@ -88,8 +94,8 @@ class ProductController extends Controller
 
         // Query For Objects
 
-        $product = $this->getDoctrine()
-            ->getRepository(Product::class)->findAll();
+//        $product = $this->getDoctrine()
+//            ->getRepository(Product::class)->findAll();
 
 
         //Objects with Doctrine Query Builder
@@ -111,6 +117,9 @@ class ProductController extends Controller
 
 //        $product = $query->getResult();
 
+        $productService = $this->get("app.service.products");
+        $product = $productService->showProduct();
+
         if (!$product) {
             throw $this->createNotFoundException(
                 'No product found'
@@ -131,18 +140,49 @@ class ProductController extends Controller
 
     public function updateProduct(Request $request, $key)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $product = $entityManager->getRepository(Product::class)->find($key);
+//        $entityManager = $this->getDoctrine()->getManager();
+//        $product = $entityManager->getRepository(Product::class)->find($key);
+//
+//        if (!$product) {
+//            throw $this->createNotFoundException(
+//                'No product found for id '.$key
+//            );
+//        }
+//
+//        $form = $this->createFormBuilder($product)
+//            ->add('name', TextType::class)
+//            ->add('price', \Symfony\Component\Form\Extension\Core\Type\IntegerType::class)
+//            ->add('description', TextType::class)
+//            ->add('category', EntityType::class, array(
+//                'class' => 'AppBundle:Category',
+//                'choice_label' => 'Select Category'
+//            ))
+//            ->add('save', SubmitType::class, array('label' =>'Update Product'))
+//            ->getForm();
+//
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//              $product->setName($product->getName());
+//              $product->setPrice($product->getPrice());
+//              $product->setDescription($product->getDescription());
+//              $entityManager->flush();
+//
+//            return $this->redirectToRoute('show_product');
+//        }
 
+
+
+        $productService = $this->get("app.service.products");
+        $product = $productService->findProduct($key);
         if (!$product) {
             throw $this->createNotFoundException(
                 'No product found for id '.$key
             );
         }
-
         $form = $this->createFormBuilder($product)
             ->add('name', TextType::class)
-            ->add('price', \Symfony\Component\Form\Extension\Core\Type\IntegerType::class)
+            ->add('price', IntegerType::class)
             ->add('description', TextType::class)
             ->add('category', EntityType::class, array(
                 'class' => 'AppBundle:Category',
@@ -154,11 +194,7 @@ class ProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-              $product->setName($product->getName());
-              $product->setPrice($product->getPrice());
-              $product->setDescription($product->getDescription());
-              $entityManager->flush();
-
+            $productService->entityManager->flush();
             return $this->redirectToRoute('show_product');
         }
 
@@ -177,11 +213,29 @@ class ProductController extends Controller
     public function deleteProduct($key)
     {
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $product = $entityManager->getRepository(Product::class)->find($key);
-        $entityManager->remove($product);
-        $entityManager->flush();
+//        $entityManager = $this->getDoctrine()->getManager();
+//        $product = $entityManager->getRepository(Product::class)->find($key);
+//        $entityManager->remove($product);
+//        $entityManager->flush();
+
+
+        $productService = $this->get("app.service.products");
+        $productService->deleteProduct($key);
 
         return $this->redirectToRoute('show_product');
     }
+
+
+//    /**
+//     * @param MessageGenerator $messageGenerator
+//     * @Route("/action/")
+//     */
+//
+//    public function newAction(MessageGenerator $messageGenerator)
+//    {
+//        $message = $messageGenerator->getHappyMessage();
+//        $this->addFlash('success',$message);
+//
+//        return new Response("$message");
+//    }
 }
