@@ -11,9 +11,40 @@
     {% endblock %}
 
     {% block body %}
+        <div class="banner">
 
-        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-        {{ form_widget(form) }}
-        {{ form_end(form) }}
+            <div class="form-box">
+                <h1 class="login-heading"> New Product </h1>
 
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+
+            </div>
+        </div>
+
+
+        {#<div class="banner">#}
+
+            {#<div class="form-box">#}
+                {#<h1 class="login-heading"> New Product </h1>#}
+                {#<form id="form" action="" method="post" enctype="multipart/form-data">#}
+
+                    {#<div class="form-group">#}
+                        {#<span id="emaillabel" for="email"></span>#}
+                        {#<input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" onchange="validateInput(this)">#}
+                    {#</div>#}
+
+                    {#<div class="form-group">#}
+                        {#<span id="passwordlabel" for="password"></span>#}
+                        {#<input type="password" class="form-control" id="password" name="password" placeholder="Password" onchange="validateInput(this)">#}
+                    {#</div>#}
+                    {#<a href="signup.php">Click here For Signup</a>#}
+                    {#<button id="submit" name="submit" type="submit" class="btn btn-primary">Login</button>#}
+
+                {#</form>#}
+
+            {#</div>#}
+
+        {#</div>#}
     {% endblock %}

@@ -82,4 +82,21 @@ class Category
         // TODO: Implement __get() method.
         return $this->name;
     }
+
+
+    public function __toString()
+    {
+        // to show the name of the Category in the select
+        return $this->name;
+        // to show the id of the Category in the select
+        // return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
 }

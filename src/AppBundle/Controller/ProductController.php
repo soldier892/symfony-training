@@ -29,9 +29,6 @@ class ProductController extends Controller
     {
         $product = new Product();
 
-
-
-
         $form = $this->createFormBuilder($product)
             ->add('name', TextType::class)
             ->add('price', IntegerType::class)

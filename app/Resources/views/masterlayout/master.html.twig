@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <title>{% block title %}Test Application{% endblock %}</title>
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" />
+
 
 
 </head>
@@ -21,9 +23,12 @@
     {% endblock %}
 </div>
 
-<div id="content">
+
     {% block body %}{% endblock %}
-</div>
+
+
+    <script href="{{ asset('js/bootstrap.js') }}"></script>
+    <script href="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
 
 </body>
 

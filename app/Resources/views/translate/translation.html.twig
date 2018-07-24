@@ -1,0 +1,16 @@
+
+
+{% trans %}Hello %name% {% endtrans %}
+
+{#{% transchoice count %}#}
+    {#{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples#}
+{#{% endtranschoice %}#}
+Enter Your Name
+
+{#{% trans with {'%name%': 'Fabien'} from 'app' %}Hello %name%{% endtrans %}#}
+
+{% trans with {'%name%': "J'aime Symfony"} from 'app' into 'en' %}Hello %name%{% endtrans %}
+
+{#{% transchoice count with {'%name%': 'Fabien'} from 'app' %}#}
+    {#{0} %name%, there are no apples|{1} %name%, there is one apple|]1,Inf[ %name%, there are %count% apples#}
+{#{% endtranschoice %}#}

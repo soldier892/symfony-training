@@ -1,26 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Product Crud</title>
-</head>
-<body>
+{% extends 'masterlayout/master.html.twig' %}
 
-{% for item in products %}
+    {% block title %}
+        Product Crud
+    {% endblock %}
+    {% block sidebar %}
 
-    <ul>
-        <li> {{ item.name }} </li>
-        <li> {{ item.price }} </li>
-        <li> {{ item.description }} </li>
-        <li> <a href="{{ path('update_product', { 'key' :  item.id  }) }}">Edit</a> </li>
-        <li> <a href="{{ path('delete_product', { 'key' :  item.id  }) }}">Delete</a> </li>
-    </ul>
+    {% endblock %}
+    {% block body %}
 
-{% endfor %}
+        <h1>Products List</h1>
+
+        {#{% for item in products %}#}
+
+            {#<ul>#}
+                {#<li> {{ item.name }} </li>#}
+                {#<li> {{ item.price }} </li>#}
+                {#<li> {{ item.description }} </li>#}
+                {#<li> <a href="{{ path('update_product', { 'key' :  item.id  }) }}">Edit</a> </li>#}
+                {#<li> <a href="{{ path('delete_product', { 'key' :  item.id  }) }}">Delete</a> </li>#}
+            {#</ul>#}
+
+        {#{% endfor %}#}
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Description</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for item in products %}
+
+                <tr>
+                    <td> {{ item.name }} </td>
+                    <td> {{ item.price }} </td>
+                    <td> {{ item.description }} </td>
+
+                    <td> <a href="{{ path('update_product', { 'key' :  item.id  }) }}">Edit</a>
+                    <a href="{{ path('delete_product', { 'key' :  item.id  }) }}">Delete</a> </td>
+                </tr>
+
+            {% endfor %}
 
 
-<a href="{{ path('create_product') }}">Add New Product</a>
+            </tbody>
+        </table>
 
+        <a href="{{ path('create_product') }}">Add New Product</a>
 
-</body>
-</html>
+    {% endblock %}
