@@ -17,7 +17,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-
 class ProductController extends Controller
 {
 
@@ -37,7 +36,8 @@ class ProductController extends Controller
                 'class' => 'AppBundle:Category',
                 'choice_label' => 'Select Category'
             ))
-            ->add('save', SubmitType::class, array('label' =>'Save Product'))
+            ->add('save', SubmitType::class, array('label' =>'Save Product','attr' => array(
+                'class' => 'btn btn-info')))
             ->getForm();
 
         $form->handleRequest($request);
@@ -46,9 +46,11 @@ class ProductController extends Controller
             $product = $form->getData();
             $productService = $this->get("app.service.products");
 
+
             if ($productService->createProduct($product)) {
                 return $this->redirectToRoute('show_product');
             }
+
 
 //            $entityManager = $this->getDoctrine()->getManager();
 //
@@ -58,7 +60,8 @@ class ProductController extends Controller
         }
 
         return $this->render('/Forms/new_form.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'heading' => 'New Product'
         ));
 
 
@@ -185,7 +188,8 @@ class ProductController extends Controller
                 'class' => 'AppBundle:Category',
                 'choice_label' => 'Select Category'
             ))
-            ->add('save', SubmitType::class, array('label' =>'Update Product'))
+            ->add('save', SubmitType::class, array('label' =>'Update Product','attr' => array(
+                'class' => 'btn btn-info')))
             ->getForm();
 
         $form->handleRequest($request);
@@ -196,7 +200,8 @@ class ProductController extends Controller
         }
 
         return $this->render('/Forms/new_form.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'heading' => 'Update Product'
         ));
     }
 

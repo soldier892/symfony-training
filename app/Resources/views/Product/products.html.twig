@@ -7,24 +7,14 @@
 
     {% endblock %}
     {% block body %}
+    <div class="container">
 
-        <h1>Products List</h1>
+        <h1 class="text-center">Products List</h1>
 
-        {#{% for item in products %}#}
-
-            {#<ul>#}
-                {#<li> {{ item.name }} </li>#}
-                {#<li> {{ item.price }} </li>#}
-                {#<li> {{ item.description }} </li>#}
-                {#<li> <a href="{{ path('update_product', { 'key' :  item.id  }) }}">Edit</a> </li>#}
-                {#<li> <a href="{{ path('delete_product', { 'key' :  item.id  }) }}">Delete</a> </li>#}
-            {#</ul>#}
-
-        {#{% endfor %}#}
-
-        <table class="table">
+        <table class="table table-bordered">
             <thead>
             <tr>
+                <th scope="col">Sr #</th>
                 <th scope="col">Name</th>
                 <th scope="col">Price</th>
                 <th scope="col">Description</th>
@@ -36,20 +26,20 @@
             {% for item in products %}
 
                 <tr>
+                    <td> {{ loop.index	 }} </td>
                     <td> {{ item.name }} </td>
                     <td> {{ item.price }} </td>
                     <td> {{ item.description }} </td>
 
-                    <td> <a href="{{ path('update_product', { 'key' :  item.id  }) }}">Edit</a>
-                    <a href="{{ path('delete_product', { 'key' :  item.id  }) }}">Delete</a> </td>
+                    <td> <a class="btn btn-info" href="{{ path('update_product', { 'key' :  item.id  }) }}">Edit</a>
+                    <a class="btn btn-danger" href="{{ path('delete_product', { 'key' :  item.id  }) }}">Delete</a> </td>
                 </tr>
 
             {% endfor %}
-
 
             </tbody>
         </table>
 
         <a href="{{ path('create_product') }}">Add New Product</a>
-
+    </div>
     {% endblock %}

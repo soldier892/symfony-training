@@ -9,8 +9,9 @@ parameters:
     locale: en
 
 framework:
-    #esi: ~
-    translator: { fallbacks: ['%locale%'] }
+    #esi: ~Malik_892
+
+    #translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
     router:
         resource: '%kernel.project_dir%/app/config/routing.yml'
@@ -35,6 +36,7 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form_themes: ['bootstrap_3_layout.html.twig']
 
 
 # Doctrine Configuration
@@ -66,54 +68,3 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
-
-easy_admin:
-
-    entities:
-        # change the following to the namespaces of your own entities
-#        - AppBundle\Entity\Product
-        Product:
-           class: AppBundle\Entity\Product
-           label: 'Products'
-           list:
-              dql_filter: 'entity.price > 100'
-              title: '%%entity_label%% listing'
-              fields: ['id', 'name', {property : 'price', label: 'Value', type: bigint, format: '%01.2f', type_options: { currency: 'EUR' }  }, 'description', 'category']
-              max_results: 1
-
-#           templates:
-#                paginator: '@App/Resources/easyadmin/paginator.html.twig'
-
-        Category:
-            class: AppBundle\Entity\Category
-            label: 'Categories'
-            list:
-              title: "Most recent categories"
-              help: 'The list contains total number of categories'
-              max_results: 3
-            show:
-              title: '%%entity_label%% (#%%entity_id%%)'
-
-            form:
-                fields:
-                    - 'id'
-                    - { property: 'name', type: 'text', label: 'Name' }
-                title: 'Add Category'
-                form_options: { validation_groups: ['Default'] }
-            new:
-                form_options: { validation_groups: ['Default', 'Category'] }
-            edit:
-                title:  'Edit customer'
-                form_options: { validation_groups: ['Default'] }
-                fields:
-                    - name
-
-#        - AppBundle\Entity\Category
-
-    site_name: 'Product <em style="font-size: 80%;"> CRUD</em>'
-
-    design:
-            brand_color: '#483D8B'
-            color_scheme: 'dark'
-            rtl: false
-            form_theme: 'horizontal'

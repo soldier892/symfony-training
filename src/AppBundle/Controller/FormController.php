@@ -28,9 +28,13 @@ class FormController extends Controller
         $task->setDueDate(new \DateTime("tomorrow"));
 
         $form = $this->createFormBuilder($task)
-            ->add('Task', TextType::class)
-            ->add('dueDate', DateType::class, array('widget' => 'single_text'))
-            ->add('save', SubmitType::class, array('label' =>'Create Task'))
+            ->add('Task', TextType::class, array('attr' => array(
+                'class' => 'form-control'
+            )))
+            ->add('dueDate', DateType::class, array('widget' => 'single_text','attr' => array(
+                'class' => 'form-control')))
+            ->add('save', SubmitType::class, array('label' =>'Create Task','attr' => array(
+                'class' => 'form-control btn btn-info')))
             ->getForm();
 
         $form->handleRequest($request);

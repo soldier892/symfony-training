@@ -31,15 +31,19 @@ class Products
 
         return true;
     }
+
+
     public function showProduct()
     {
         return $this->entityManager->getRepository(Product::class)->findAll();
     }
 
+
     public function findProduct($key)
     {
         return $product = $this->entityManager->getRepository(Product::class)->find($key);
     }
+
 
     public function deleteProduct($key)
     {
@@ -47,4 +51,5 @@ class Products
         $this->entityManager->remove($product);
         $this->entityManager->flush();
     }
+
 }
