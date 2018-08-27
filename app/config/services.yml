@@ -38,4 +38,9 @@ services:
         arguments:
           - '@doctrine.orm.entity_manager'
 
+    app.service.fileupload:
+        class: AppBundle\Service\FileUploader
+        arguments:
+            - '%picture_directory%'
+
 

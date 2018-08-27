@@ -11,11 +11,13 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Service\FileUploader as fileUploader;
 
 class ProductController extends Controller
 {
@@ -29,6 +31,7 @@ class ProductController extends Controller
         $product = new Product();
 
         $form = $this->createFormBuilder($product)
+            ->add('picture', FileType::class, array('label' => 'Product Picture (JPG file)'))
             ->add('name', TextType::class)
             ->add('price', IntegerType::class)
             ->add('description', TextType::class)
@@ -44,8 +47,26 @@ class ProductController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $product = $form->getData();
-            $productService = $this->get("app.service.products");
 
+//            /**
+//             * @var Symfony\Component\HttpFoundation\File\UploadedFile $file
+//             */
+//            $file = $product->getPicture();
+//
+//            $filename = $this->generateUniqueFileName().''.$file->guessExtension();
+//
+//            $file->move($this->getParameter('picture_directory'), $filename);
+//            $product->setPicture($filename);
+
+
+
+            $file = $product->getPicture();
+            $fileName = $this->get("app.service.fileupload")->upload($file);
+            $product->setPicture($fileName);
+
+
+
+            $productService = $this->get("app.service.products");
 
             if ($productService->createProduct($product)) {
                 return $this->redirectToRoute('show_product');
@@ -82,6 +103,13 @@ class ProductController extends Controller
 //        return new Response('Saved new product '.$product->getName());
     }
 
+    /**
+     * @return string
+     */
+    private function generateUniqueFileName()
+    {
+        return md5(uniqid());
+    }
 
     /**
      * @Route("/show/product/", name="show_product")
@@ -226,6 +254,8 @@ class ProductController extends Controller
 
         return $this->redirectToRoute('show_product');
     }
+
+
 
 
 //    /**

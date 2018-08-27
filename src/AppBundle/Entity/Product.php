@@ -23,6 +23,30 @@ class Product
     private $id;
 
     /**
+     * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(message="Please, upload the product image as a PNG or JPG file.")
+     * @Assert\File(mimeTypes={"image/jpeg"})
+     */
+    private $picture;
+
+    /**
+     * @return mixed
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param mixed $picture
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+    }
+
+    /**
      * @var $name
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank()
